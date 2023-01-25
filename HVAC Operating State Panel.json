@@ -1,0 +1,509 @@
+{
+  "id": 20,
+  "gridPos": {
+    "h": 8,
+    "w": 24,
+    "x": 0,
+    "y": 0
+  },
+  "type": "state-timeline",
+  "title": "HVAC Operating State",
+  "datasource": {
+    "type": "influxdb",
+    "uid": "3Hfgprbnk"
+  },
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "lineWidth": 0,
+        "fillOpacity": 70,
+        "spanNulls": false
+      },
+      "color": {
+        "mode": "thresholds"
+      },
+      "mappings": [
+        {
+          "options": {
+            "Cold": {
+              "color": "dark-blue",
+              "index": 11
+            },
+            "Cool": {
+              "color": "blue",
+              "index": 12
+            },
+            "Hot": {
+              "color": "dark-orange",
+              "index": 17
+            },
+            "Neutral": {
+              "color": "super-light-blue",
+              "index": 14
+            },
+            "Slightly Cool": {
+              "color": "light-blue",
+              "index": 13
+            },
+            "Slightly Warm": {
+              "color": "super-light-orange",
+              "index": 15
+            },
+            "Warm": {
+              "color": "orange",
+              "index": 16
+            },
+            "auto": {
+              "color": "light-blue",
+              "index": 9,
+              "text": "Auto"
+            },
+            "circulate": {
+              "color": "super-light-green",
+              "index": 10,
+              "text": "Circ"
+            },
+            "cooling": {
+              "color": "blue",
+              "index": 0,
+              "text": "Cooling"
+            },
+            "fan only": {
+              "color": "#8d8b8b",
+              "index": 2,
+              "text": "Fan Only"
+            },
+            "heating": {
+              "color": "semi-dark-orange",
+              "index": 6,
+              "text": "Heating"
+            },
+            "idle": {
+              "color": "#8d8b8b",
+              "index": 1,
+              "text": "Idle"
+            },
+            "off": {
+              "color": "red",
+              "index": 8,
+              "text": "Off"
+            },
+            "on": {
+              "color": "green",
+              "index": 7,
+              "text": "On"
+            },
+            "pending cool": {
+              "color": "super-light-blue",
+              "index": 4,
+              "text": "Waiting"
+            },
+            "pending heat": {
+              "color": "super-light-orange",
+              "index": 5,
+              "text": "Waiting"
+            },
+            "running": {
+              "color": "green",
+              "index": 3,
+              "text": "Running"
+            }
+          },
+          "type": "value"
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      }
+    },
+    "overrides": [
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "State"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "none"
+          }
+        ]
+      }
+    ]
+  },
+  "options": {
+    "mergeValues": true,
+    "showValue": "always",
+    "alignValue": "left",
+    "rowHeight": 0.9,
+    "legend": {
+      "showLegend": false,
+      "displayMode": "list",
+      "placement": "bottom"
+    },
+    "tooltip": {
+      "mode": "single",
+      "sort": "none"
+    }
+  },
+  "targets": [
+    {
+      "alias": "HVAC",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "measurement": "thermostatOperatingState",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Thermostat"
+        }
+      ]
+    },
+    {
+      "alias": "2nd Stage",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "switch",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "G",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Thermostat 2nd Stage Status"
+        }
+      ]
+    },
+    {
+      "alias": "HVAC Fan",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "thermostatFanMode",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "C",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Thermostat"
+        }
+      ]
+    },
+    {
+      "alias": "Fan State",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "thermostatFanState",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "E",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Thermostat"
+        }
+      ]
+    },
+    {
+      "alias": "Dehum",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "switch",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "B",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "condition": "OR",
+          "key": "displayName",
+          "operator": "=",
+          "value": "Dining Room Dehumidifying Statistics"
+        },
+        {
+          "condition": "OR",
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Dehumidifying Statistics"
+        }
+      ]
+    },
+    {
+      "alias": "Dehum Fan",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "switch",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "D",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Dining Room Dehumidifier Fan Status"
+        },
+        {
+          "condition": "OR",
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Dehumidifier Fan Status"
+        }
+      ]
+    },
+    {
+      "alias": "Sensation",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "3Hfgprbnk"
+      },
+      "groupBy": [
+        {
+          "params": [
+            "$__interval"
+          ],
+          "type": "time"
+        },
+        {
+          "params": [
+            "previous"
+          ],
+          "type": "fill"
+        }
+      ],
+      "hide": false,
+      "measurement": "sensation",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "F",
+      "resultFormat": "time_series",
+      "select": [
+        [
+          {
+            "params": [
+              "value"
+            ],
+            "type": "field"
+          },
+          {
+            "params": [],
+            "type": "last"
+          }
+        ]
+      ],
+      "tags": [
+        {
+          "key": "displayName",
+          "operator": "=",
+          "value": "Downstairs Thermal Comfort"
+        }
+      ]
+    }
+  ]
+}
